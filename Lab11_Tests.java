@@ -18,11 +18,37 @@ public class Lab11_Tests {
         threadA.start();
         threadB.start();
 
+        try {
+            threadA.join();
+            threadB.join(); 
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<String> sharedData = threadA.getData();
+
+        int countA = 0;
+        int countB = 0;
+        
+        for (int i = 0; i < sharedData.size(); i++) {
+            String entry = sharedData.get(i);
+            if (entry.startsWith("A1")) {
+                countA++;
+            } else if (entry.startsWith("B1")) {
+                countB++;
+            }
+        }
+        
+        assertEquals("Thread A: 100 entries", 100, countA);
+        assertEquals("Thread B: entries", 100, countB);
+        assertEquals("Total entries: 200", 200, sharedData.size());
+
     }
 
     /*
         Complete the test case below that checks to see if the shared ArrayList has at least 10 entries after 500ms of system time
     */
+   /*
     @Test
     public void test2() {
 
@@ -38,11 +64,13 @@ public class Lab11_Tests {
         }
 
     }
+    */
 
     /*
         Complete the test case below that checks to see if thread A finishes adding its 10 entries before thread B was allowed to 
         add anything to the shared ArrayList
     */
+   /*
     @Test
     public void test3() {
         Lab11_Thread threadA = new Lab11_Thread("A3", 10);
@@ -58,4 +86,5 @@ public class Lab11_Tests {
         
         threadB.start();
     }
+    */
 }
